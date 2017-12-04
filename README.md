@@ -1,2 +1,2 @@
-# ihvac_front
-Front end for the ihvac system
+# intelligent_hvac_front
+Front end for the intelligent HVAC project
