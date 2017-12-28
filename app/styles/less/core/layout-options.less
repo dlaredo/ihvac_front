@@ -7,10 +7,21 @@
     position: relative; //fix
     top: 0;
   }
-  .main-content {
-    padding-top: 20px; //@header-height + @gutter
+  .main-panel > .smallmenu{
+    position: relative;
+    padding-top: 10px;
     &.no-padding {
       padding-top: @header-height;
+      padding-left: 0;
+      padding-right: 0;
+      padding-bottom: 0;
+    }
+
+  }
+  .main-content {
+    padding-top: 0; //@header-height + @gutter
+    &.no-padding {
+      padding-top: 0;
       padding-left: 0;
       padding-right: 0;
       padding-bottom: 0;
