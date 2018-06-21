@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-<html ng-app="" ng-init="rooms=[{number:0, name:'Jani'}, {number:1, name:'Hege'},{number:2, name:'Kai'}]">
+<html ng-app="hvacIssueApp" ng-controller="hvacIssueCtrl" ng-init="rooms=[{number:0, name:'Jani'}, {number:1, name:'Hege'},{number:2, name:'Kai'}]">
 <head>
     <meta charset="utf-8">
     <title>HVAC Issue Form</title>
-    <link rel="stylesheet" media="screen" href="styles_form.css" >
+    <link rel="stylesheet" media="screen" href="report_hvac_issue.css" >
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.min.js"></script>
+    <script src="report_hvac_issue_app.js"></script>
 </head>
 <body>
 
-	<form class="issue_form" action="http://127.0.0.1:5000/reportHvacIssue" method="post" name="issue_form">
-
-        <label>Name:</label>
-      <input type="text" ng-model="yourName" placeholder="Enter a name here">
-      <hr>
-      <h1>Hello {{yourName}}!</h1>
+	<form class="issue_form" name="issue_form">
 
 		<ul>
     		<li>
@@ -23,35 +19,28 @@
     		<li>
         		<label for="locBuilding">Building:</label>
 
-        		<select name="locBuilding">
-        			<option value="se2">SE 2</option>
+        		<select name="locBuilding" ng-change="changeBuildingLocation()" ng-model=selectedBuilding ng-options="building.buildingId as building.buildingName for building in buildings">
         		</select>
 
         	</li>
         	<li>
         		<label for="locFloor">Floor:</label>
-    			<select name="locFloor">
-        			<option value=0>Basement</option>
-        			<option value=1>Ground Floor</option>
-        			<option value=2>First Floor</option>
-        			<option value=3>Second Floor</option>
-        			<option value=4>Third Floor</option>
+    			<select name="locFloor" ng-change="changeFloorLocation()" ng-model=selectedFloor ng-options="floor.floorNumber as floor.floorName for floor in buildingFloors">
         		</select>
     			<span class="form_hint">This is the floor where the fault is detected</span>
     		</li>
     		<li>
         		<label for="locRoom">Room:</label>
-        		<select name="locRoom">
-        			<option ng-repeat="x in rooms" value={{x.number}}>{{x.name}}</option>
+        		<select name="locRoom" ng-model=selectedRoom ng-options="room.roomId as room.roomName for room in buildingRoomsByFloor">
         		</select>
     			<span class="form_hint">This is the room where the fault is detected</span>
     		</li>
     		<li>
     			<label for="description">Describe the issue:</label>
-    			<textarea name="description" cols="40" rows="6" required=""></textarea>
+    			<textarea name="description" cols="40" rows="6" required="" ng-model="description"></textarea>
 			</li>
     		<li>
-    			<button class="submit" type="submit">Submit Form</button>
+    			<button class="submit" ng-click="submit()">Submit Form</button>
 			</li>
 		</ul>
 
